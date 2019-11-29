@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
     goodsdetali:{},
     goodsItem:[],
     isShow:false,
-    isMax:false
+    isMax:false,
+    addressList:[],
   },
   getters:{
     totalNum(state){
@@ -28,6 +30,41 @@ export default new Vuex.Store({
         totalPrice+=item.price*item.temp
       });
       return totalPrice
+    },
+    allCartChacked(state){
+      var allChacked=true
+      state.goodsItem.forEach(item=>{
+        if(item.checked==false){
+          allChacked=false
+        }
+      })
+      return allChacked
+    },
+    allChackedNum(state){
+      var temp = 0
+      var temp1 =0
+      state.goodsItem.forEach(item=>{
+        if(item.checked==true){
+          temp+=item.temp 
+          temp1++
+        }
+      })
+      return {temp:temp,temp1:temp1}
+    },
+    allChackedPrice(state){
+      var price=0
+      state.goodsItem.forEach(item=>{
+        if(item.checked==true){
+          price+=item.price*item.temp
+        }
+      })
+      return price
+    },
+    freightPrice(state,getters){
+        if(getters.allChackedPrice>=200){
+          return 0
+        }
+        return 10
     }
   },
   mutations: {
@@ -61,6 +98,7 @@ export default new Vuex.Store({
       if(flag){
          var goods =data.goods
          Vue.set(goods,'temp',data.temp)
+         Vue.set(goods,'checked',true)
          state.goodsItem.push(goods)
          state.isShow=true
       }
@@ -102,12 +140,63 @@ export default new Vuex.Store({
       if(flag){
         var data = datas.data
          Vue.set(data,'temp',datas.temp)
+         Vue.set(data,'checked',true)
          state.goodsItem.push(data)
          state.isShow=true
       }
     },
+    changeChecked(state,id){
+      state.goodsItem.forEach(item=>{
+        if(item.id==id){
+          item.checked=!item.checked
+        }
+      })
     },
+    changeAllChacked(state,buerl){
+      state.goodsItem.forEach(item=>{
+            item.checked=!buerl
+      })
+    },
+    delCart(state,id){
+      state.goodsItem.forEach(item=>{
+        if(item.id==id){
+          if(item.temp<=1) return
+          item.temp--
+        }
+      })
+    },
+    addCart(state,id){
+      state.goodsItem.forEach(item=>{
+        if(item.id==id){
+          if(item.temp>=item.limit_num) return
+          item.temp++
+        }
+      })
+    },
+    delSelectedItems(state){
+      for(var i=state.goodsItem.length-1;i>=0;i--){
+        if(state.goodsItem[i].checked==true){
+          state.goodsItem.splice(i,1)
+        }
+      }
+    },
+    changeisisShow(state){
+      state.isShow=false
+    },
+    getAddressList(state,data){
+      state.addressList=data
+    },
+    getchangecity(state,id){
 
+      state.addressList.forEach(item =>{
+        if(item.id==id){
+           item.default=true
+           return
+      }
+      item.default=false
+      })   
+    }
+  },
   actions: {
 
     getCateDataAsynce(context) {
@@ -132,8 +221,19 @@ export default new Vuex.Store({
       }).catch(function (error) {
         console.log(error);
       })
+    },
+    getAddressListAsynce(context, user_id) {
+      axios.get('http://localhost:3000/address/' + user_id).then(function (data) {
+        console.log(data.data);
+        context.commit('getAddressList', data.data)
+      }).catch(function (error) {
+        console.log(error);
+      })
     }
   },
   modules: {
-  }
+  },
+  plugins:[createPersistedState({
+      storage:window.sessionStorage
+    })]
 })

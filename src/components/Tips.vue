@@ -7,7 +7,7 @@
               <div class="dialog-tit clear">
                 <h4 class="js-dialog-title">Tips</h4>
               </div>
-              <span class="dialog-close png"></span>
+              <span class="dialog-close png" @click="handlerTips"></span>
             </div>
             <div class="dialog-con js-dialog-container">
               <div class="confirm-msg">The product has reached the maximum quantity available for purchase</div>

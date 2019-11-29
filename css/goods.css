@@ -1,107 +1,3 @@
-<template>
-   <div id="main">
-        <div class="store-content item">
-            <div class="item-box">
-                    <div class="gallery-wrapper">
-                        <div class="gallery">
-                            <div class="thumbnail">
-                                <ul>
-                                    <li :key="item.id" v-for='(item,index) in item.ali_images' @click=handler(index,item) :class="{on: current_index==index}" >
-                                        <img :src="item" >
-                                    </li>
-
-                                </ul>
-                            </div>
-                            <div class="thumb">
-                                <ul>
-                                    <li :key="item.id" v-for='(item,index) in item.ali_images' :class="{on:current_index==index}" >
-                                        <!-- <img :src="src" width="400"> -->
-                                        <img :src="item" width="400">
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="banner">    
-                        <div class="sku-custom-title">
-                            <div class="params-price">
-                                <span><em style="font-size:25px;">$</em><i>{{item.price}}</i></span>
-                            </div>
-                            <div class="params-info">
-                                <h4>{{item.name}}</h4>
-                                <h6>{{item.name_title}}</h6>
-                            </div>
-                        </div>
-                        <div class="sku-dynamic-params-panel">
-                            <div class="sku-dynamic-params clear">
-                                <div class="params-name">Qty</div>
-                                <div class="params-detail clear">
-                                    <div class="item-num js-select-quantity">
-                                        <span class="down"   @click="del" :class="{'down-disabled':temp<=1}">- </span>
-                                        <span class="num">{{temp}}</span>
-                                        <span class="up" @click="add" :class="{'up-disabled':temp>=item.limit_num}" >+</span>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sku-status">
-                            <div class="cart-operation-wrapper clearfix">
-                                <span class="blue-title-btn js-add-cart" @click="addToCart(item,temp)"><a>Add to Cart</a></span>
-                                <span class="gray-title-btn"><a>Buy Now</a></span>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <Tips></Tips>
-        </div>
-    <!-- <prompt></prompt> -->
-    </div>
-</template>
-
-<script>
-import Tips from '../components/Tips'
-export default {
-    data(){
-       return {
-           temp:1,
-           current_index:0,
-           src:this.item.ali_image
-       
-       }
-    },
-    components:{
-        Tips
-    },
-    methods:{
-        handler(index,item){
-                this.current_index=index
-                this.src=item
-        },
-        del(){
-             this.temp-=1
-             if(this.temp<=1){
-                 this.temp=1
-             }  
-        },
-        add(){
-             this.temp+=1
-              if(this.temp>=this.item.limit_num){
-                 this.temp=this.item.limit_num
-             }
-        },
-        addToCart(data,temp){
-            var datas={data:data,temp:temp}
-            this.$store.commit('getAddToCart',datas)
-        }
-    },
-    props:{
-        item:Object
-    },
-}
-</script>
-
-<style>
 @charset "utf-8";
 .item .item-box{
   width: 1098px;
@@ -299,7 +195,7 @@ item-box img{
 }
 .item-box .item-num .down, .item-box .item-num .up{
 	position: relative;
-    /* float:left; */
+    /* float: left; */
     display: inline-block;
     width: 36px;
     height: 36px;
@@ -363,7 +259,7 @@ item-box img{
     padding: 30px 0 0 10px;
 }
 .item-box .blue-title-btn{
-	/* float:left; */
+	/* float: left; */
     display: inline-block;
     width: 143px;
     height: 48px;
@@ -402,4 +298,3 @@ item-box img{
 	transition: all .15s ease-out;
     background: linear-gradient(#f6f6f6,#ededed);
 }
-</style>

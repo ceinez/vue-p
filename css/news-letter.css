@@ -1,0 +1,66 @@
+    .newsletter-area {
+        position: relative;
+        z-index: 1;
+        background-color: #3c3c3c; 
+        height: 300px;
+      }
+      .newsletter-area .newsletter-text {
+          position: relative;
+          z-index: 1; 
+          width: 50%;
+          height: 100px;
+          float: left;
+          top:100px;
+          left: 50px;
+      }
+      .newsletter-area .newsletter-text h2 {
+          font-size: 36px;
+          margin-bottom: 10px;
+          color: #fff; 
+          font-size: 30px;
+      }
+      .newsletter-area .newsletter-text h2 span {
+              color: #fbb710; 
+      }
+      .newsletter-area .newsletter-text p {
+            color: #b3b1b1;
+            margin-bottom: 0; 
+      }
+      .newsletter-area .newsletter-form {
+          position: relative;
+          z-index: 1; 
+          width: 30%;
+          height: 50px;
+          float: left;
+          top:125px;
+          left: 50px;
+      }
+      .newsletter-area .newsletter-form form input[type="email"] {
+          width: 100%;
+          height: 50px;
+          background-color: #fff;
+          color: #afafaf;
+          font-size: 14px;
+          font-style: italic;
+          border: none;
+          padding: 0 30px; 
+      }
+      .newsletter-area .newsletter-form form input[type="submit"] {
+          -webkit-transition-duration: 500ms;
+          transition-duration: 500ms;
+          height: 50px;
+          background-color: #fbb710;
+          color: #fff;
+          font-size: 14px;
+          padding: 0 30px;
+          cursor: pointer;
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 10;
+          border: none; 
+      }
+      .newsletter-area .newsletter-form form input[type="submit"]:hover, .newsletter-area .newsletter-form form input[type="submit"]:focus {
+          background-color: #fbb710;
+          color: #fff; 
+      }

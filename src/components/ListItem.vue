@@ -25,6 +25,8 @@
 </template>
 
 <script>
+ var timer=null   
+
 export default {
   props: ["item1"],
   data(){
@@ -33,10 +35,15 @@ export default {
     }
   },
   methods:{
-    
     handlerAdd(){
      var goodsitem = {goods:this.item1,temp:1}
         this.$store.commit("getGoodsItem",goodsitem)
+
+        clearInterval(timer)
+        
+       timer=setTimeout(() => {
+        this.$store.commit("changeisisShow")
+        }, 2000);
     }
   }
 };

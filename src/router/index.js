@@ -4,6 +4,8 @@ import '../assets/css/reset.css'
 import Home from '../views/Home.vue'
 import Shop from '../views/Shop.vue'
 import Goods from '../views/Goods.vue'
+import Cart from '../views/Cart.vue'
+import Checkout from '../views/Checkout.vue'
 
 
 
@@ -27,7 +29,19 @@ const routes = [
     name: 'goods',
     component:Goods,
     props:true
-  }
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component:Cart,
+    props:true
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component:Checkout,
+    props:true
+  },
 ]
 
 const router = new VueRouter({
